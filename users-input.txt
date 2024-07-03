@@ -1,4 +1,0 @@
-Rice;dev,admins
-John;dev
-Stones;admins
-Emy;user
