@@ -60,7 +60,7 @@ Why? Ensures that logging can occur and passwords are stored securely.
 
 Step 4: Check for Input File
 Purpose: Ensure an input file is provided and exists.
-if { $# -eq 0 }; then
+if { # -eq 0 }; then
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Usage: $0 <input_file>" | tee -a $LOG_FILE
     exit 1
 fi
