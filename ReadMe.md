@@ -11,7 +11,7 @@ Step-by-Step Guide to create_users.sh Script
 
 Step 1: Check for Root Privileges
 Purpose: Ensure the script is run with administrative (root) privileges.
-if [ "$(id -u)" -ne 0 ]; then
+if { "$(id -u)" -ne 0 }; then
     echo "This script must be run as root" 
     exit 1
 fi
@@ -60,12 +60,12 @@ Why? Ensures that logging can occur and passwords are stored securely.
 
 Step 4: Check for Input File
 Purpose: Ensure an input file is provided and exists.
-if [ $# -eq 0 ]; then
+if { $# -eq 0 }; then
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Usage: $0 <input_file>" | tee -a $LOG_FILE
     exit 1
 fi
 input_file=$1
-if [ ! -f "$input_file" ]; then
+if { ! -f "$input_file" }; then
     echo "$(date '+%Y-%m-%d %H:%M:%S') - Error: File '$input_file' not found." | tee -a $LOG_FILE
     exit 1
 fi
@@ -77,12 +77,11 @@ Why? Prevents errors and ensures the script has the necessary data to process.
 Step 5: Generate Secure Passwords
 Purpose: Generate a random, secure password for each new user.
 generate_password() {
-    tr -dc '[:alnum:]' < /dev/urandom | head -c 12
+    tr -dc '{:alnum:}' < /dev/urandom | head -c 12
     echo
 }
 Explanation:
-
-tr -dc '[:alnum:]' < /dev/urandom | head -c 12: Generates a random 12-character alphanumeric password.
+tr -dc '{:alnum:}' < /dev/urandom | head -c 12: Generates a random 12-character alphanumeric password.
 Why? Ensures that each user has a strong, unique password, enhancing security.
 
 Step 6: Create Users and Groups
@@ -146,7 +145,7 @@ user_groups() {
     done
 }
 
-while IFS=';' read -r user groups || [[ -n "$user" ]]; do
+while IFS=';' read -r user groups || { -n "$user" }; do
     user=$(echo "$user" | sed 's/ //g')
     groups=$(echo "$groups" | sed 's/ //g')
     create_user $user
